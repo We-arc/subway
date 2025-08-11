@@ -1,4 +1,4 @@
-(function (root, factory) {
+(function(root, factory) {
 	if (typeof define === 'function' && define.amd) {
 		// AMD. Register as an anonymous module.
 		define(['leaflet'], factory);
@@ -9,11 +9,11 @@
 		// Assume Leaflet is loaded into global object L already
 		factory(L);
 	}
-}(this, function (L) {
+}(this, function(L) {
 	'use strict';
 
 	L.TileLayer.Provider = L.TileLayer.extend({
-		initialize: function (arg, options) {
+		initialize: function(arg, options) {
 			var providers = L.TileLayer.Provider.providers;
 
 			var parts = arg.split('.');
@@ -52,12 +52,13 @@
 
 			// replace attribution placeholders with their values from toplevel provider attribution,
 			// recursively
-			var attributionReplacer = function (attr) {
+			var attributionReplacer = function(attr) {
 				if (attr.indexOf('{attribution.') === -1) {
 					return attr;
 				}
-				return attr.replace(/\{attribution.(\w*)\}/g,
-					function (match, attributionName) {
+				return attr.replace(
+					/\{attribution.(\w*)\}/g,
+					function(match, attributionName) {
 						return attributionReplacer(providers[attributionName].options.attribution);
 					}
 				);
@@ -86,7 +87,7 @@
 			variants: {
 				Mapnik: {},
 				DE: {
-					url: 'https://{s}.tile.openstreetmap.de/{z}/{x}/{y}.png',
+					url: 'https://tile.openstreetmap.de/{z}/{x}/{y}.png',
 					options: {
 						maxZoom: 18
 					}
@@ -119,6 +120,12 @@
 					options: {
 						attribution: '{attribution.OpenStreetMap}, Tiles courtesy of <a href="http://www.openstreetmap.bzh/" target="_blank">Breton OpenStreetMap Team</a>',
 						bounds: [[46.2, -5.5], [50, 0.7]]
+					}
+				},
+				CAT: {
+					url: 'https://tile.openstreetmap.bzh/ca/{z}/{x}/{y}.png',
+					options: {
+						attribution: '{attribution.OpenStreetMap}, Tiles courtesy of <a href="https://www.openstreetmap.cat" target="_blank">Breton OpenStreetMap Team</a>',
 					}
 				}
 			}
@@ -194,28 +201,149 @@
 			}
 		},
 		Stadia: {
-			url: 'https://tiles.stadiamaps.com/tiles/alidade_smooth/{z}/{x}/{y}{r}.png',
+			url: 'https://tiles.stadiamaps.com/tiles/{variant}/{z}/{x}/{y}{r}.{ext}',
 			options: {
+				minZoom: 0,
 				maxZoom: 20,
-				attribution: '&copy; <a href="https://stadiamaps.com/">Stadia Maps</a>, &copy; <a href="https://openmaptiles.org/">OpenMapTiles</a> &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors'
+				attribution:
+					'&copy; <a href="https://www.stadiamaps.com/" target="_blank">Stadia Maps</a> ' +
+					'&copy; <a href="https://openmaptiles.org/" target="_blank">OpenMapTiles</a> ' +
+					'{attribution.OpenStreetMap}',
+				variant: 'alidade_smooth',
+				ext: 'png'
 			},
 			variants: {
-				AlidadeSmooth: {
-					url: 'https://tiles.stadiamaps.com/tiles/alidade_smooth/{z}/{x}/{y}{r}.png'
+				AlidadeSmooth: 'alidade_smooth',
+				AlidadeSmoothDark: 'alidade_smooth_dark',
+				AlidadeSatellite: {
+					options: {
+						attribution:
+						  '&copy; CNES, Distribution Airbus DS, © Airbus DS, © PlanetObserver (Contains Copernicus Data) | ' +
+							'&copy; <a href="https://www.stadiamaps.com/" target="_blank">Stadia Maps</a> ' +
+							'&copy; <a href="https://openmaptiles.org/" target="_blank">OpenMapTiles</a> ' +
+							'{attribution.OpenStreetMap}',
+						variant: 'alidade_satellite',
+						ext: 'jpg',
+					}
 				},
-				AlidadeSmoothDark: {
-					url: 'https://tiles.stadiamaps.com/tiles/alidade_smooth_dark/{z}/{x}/{y}{r}.png'
+				OSMBright: 'osm_bright',
+				Outdoors: 'outdoors',
+				StamenToner: {
+					options: {
+						attribution:
+							'&copy; <a href="https://www.stadiamaps.com/" target="_blank">Stadia Maps</a> ' +
+							'&copy; <a href="https://www.stamen.com/" target="_blank">Stamen Design</a> ' +
+							'&copy; <a href="https://openmaptiles.org/" target="_blank">OpenMapTiles</a> ' +
+							'{attribution.OpenStreetMap}',
+						variant: 'stamen_toner'
+					}
 				},
-				OSMBright: {
-					url: 'https://tiles.stadiamaps.com/tiles/osm_bright/{z}/{x}/{y}{r}.png'
+				StamenTonerBackground: {
+					options: {
+						attribution:
+							'&copy; <a href="https://www.stadiamaps.com/" target="_blank">Stadia Maps</a> ' +
+							'&copy; <a href="https://www.stamen.com/" target="_blank">Stamen Design</a> ' +
+							'&copy; <a href="https://openmaptiles.org/" target="_blank">OpenMapTiles</a> ' +
+							'{attribution.OpenStreetMap}',
+						variant: 'stamen_toner_background'
+					}
 				},
-				Outdoors: {
-					url: 'https://tiles.stadiamaps.com/tiles/outdoors/{z}/{x}/{y}{r}.png'
+				StamenTonerLines: {
+					options: {
+						attribution:
+							'&copy; <a href="https://www.stadiamaps.com/" target="_blank">Stadia Maps</a> ' +
+							'&copy; <a href="https://www.stamen.com/" target="_blank">Stamen Design</a> ' +
+							'&copy; <a href="https://openmaptiles.org/" target="_blank">OpenMapTiles</a> ' +
+							'{attribution.OpenStreetMap}',
+						variant: 'stamen_toner_lines'
+					}
+				},
+				StamenTonerLabels: {
+					options: {
+						attribution:
+							'&copy; <a href="https://www.stadiamaps.com/" target="_blank">Stadia Maps</a> ' +
+							'&copy; <a href="https://www.stamen.com/" target="_blank">Stamen Design</a> ' +
+							'&copy; <a href="https://openmaptiles.org/" target="_blank">OpenMapTiles</a> ' +
+							'{attribution.OpenStreetMap}',
+						variant: 'stamen_toner_labels'
+					}
+				},
+				StamenTonerLite: {
+					options: {
+						attribution:
+							'&copy; <a href="https://www.stadiamaps.com/" target="_blank">Stadia Maps</a> ' +
+							'&copy; <a href="https://www.stamen.com/" target="_blank">Stamen Design</a> ' +
+							'&copy; <a href="https://openmaptiles.org/" target="_blank">OpenMapTiles</a> ' +
+							'{attribution.OpenStreetMap}',
+						variant: 'stamen_toner_lite'
+					}
+				},
+				StamenWatercolor: {
+					url: 'https://tiles.stadiamaps.com/tiles/{variant}/{z}/{x}/{y}.{ext}',
+					options: {
+						attribution:
+							'&copy; <a href="https://www.stadiamaps.com/" target="_blank">Stadia Maps</a> ' +
+							'&copy; <a href="https://www.stamen.com/" target="_blank">Stamen Design</a> ' +
+							'&copy; <a href="https://openmaptiles.org/" target="_blank">OpenMapTiles</a> ' +
+							'{attribution.OpenStreetMap}',
+						variant: 'stamen_watercolor',
+						ext: 'jpg',
+						minZoom: 1,
+						maxZoom: 16
+					}
+				},
+				StamenTerrain: {
+					options: {
+						attribution:
+							'&copy; <a href="https://www.stadiamaps.com/" target="_blank">Stadia Maps</a> ' +
+							'&copy; <a href="https://www.stamen.com/" target="_blank">Stamen Design</a> ' +
+							'&copy; <a href="https://openmaptiles.org/" target="_blank">OpenMapTiles</a> ' +
+							'{attribution.OpenStreetMap}',
+						variant: 'stamen_terrain',
+						minZoom: 0,
+						maxZoom: 18
+					}
+				},
+				StamenTerrainBackground: {
+					options: {
+						attribution:
+							'&copy; <a href="https://www.stadiamaps.com/" target="_blank">Stadia Maps</a> ' +
+							'&copy; <a href="https://www.stamen.com/" target="_blank">Stamen Design</a> ' +
+							'&copy; <a href="https://openmaptiles.org/" target="_blank">OpenMapTiles</a> ' +
+							'{attribution.OpenStreetMap}',
+						variant: 'stamen_terrain_background',
+						minZoom: 0,
+						maxZoom: 18
+					}
+				},
+				StamenTerrainLabels: {
+					options: {
+						attribution:
+							'&copy; <a href="https://www.stadiamaps.com/" target="_blank">Stadia Maps</a> ' +
+							'&copy; <a href="https://www.stamen.com/" target="_blank">Stamen Design</a> ' +
+							'&copy; <a href="https://openmaptiles.org/" target="_blank">OpenMapTiles</a> ' +
+							'{attribution.OpenStreetMap}',
+						variant: 'stamen_terrain_labels',
+						minZoom: 0,
+						maxZoom: 18
+					}
+				},
+				StamenTerrainLines: {
+					options: {
+						attribution:
+							'&copy; <a href="https://www.stadiamaps.com/" target="_blank">Stadia Maps</a> ' +
+							'&copy; <a href="https://www.stamen.com/" target="_blank">Stamen Design</a> ' +
+							'&copy; <a href="https://openmaptiles.org/" target="_blank">OpenMapTiles</a> ' +
+							'{attribution.OpenStreetMap}',
+						variant: 'stamen_terrain_lines',
+						minZoom: 0,
+						maxZoom: 18
+					}
 				}
 			}
 		},
 		Thunderforest: {
-			url: 'https://{s}.tile.thunderforest.com/{variant}/{z}/{x}/{y}.png?apikey={apikey}',
+			url: 'https://{s}.tile.thunderforest.com/{variant}/{z}/{x}/{y}{r}.png?apikey={apikey}',
 			options: {
 				attribution:
 					'&copy; <a href="http://www.thunderforest.com/">Thunderforest</a>, {attribution.OpenStreetMap}',
@@ -247,6 +375,17 @@
 				Neighbourhood: 'neighbourhood'
 			}
 		},
+		BaseMapDE: {
+			url: 'https://sgx.geodatenzentrum.de/wmts_basemapde/tile/1.0.0/{variant}/default/GLOBAL_WEBMERCATOR/{z}/{y}/{x}.png',
+			options: {
+				attribution: 'Map data: &copy; <a href="http://www.govdata.de/dl-de/by-2-0">dl-de/by-2-0</a>',
+				variant: 'de_basemapde_web_raster_farbe',
+			},
+			variants: {
+				Color: 'de_basemapde_web_raster_farbe',
+				Grey: 'de_basemapde_web_raster_grau'
+			}
+		},
 		CyclOSM: {
 			url: 'https://{s}.tile-cyclosm.openstreetmap.fr/cyclosm/{z}/{x}/{y}.png',
 			options: {
@@ -255,15 +394,14 @@
 			}
 		},
 		Jawg: {
-			url: 'https://{s}.tile.jawg.io/{variant}/{z}/{x}/{y}{r}.png?access-token={accessToken}',
+			url: 'https://tile.jawg.io/{variant}/{z}/{x}/{y}{r}.png?access-token={accessToken}',
 			options: {
 				attribution:
-					'<a href="http://jawg.io" title="Tiles Courtesy of Jawg Maps" target="_blank">&copy; <b>Jawg</b>Maps</a> ' +
+					'<a href="https://jawg.io" title="Tiles Courtesy of Jawg Maps" target="_blank">&copy; <b>Jawg</b>Maps</a> ' +
 					'{attribution.OpenStreetMap}',
 				minZoom: 0,
 				maxZoom: 22,
-				subdomains: 'abcd',
-				variant: 'jawg-terrain',
+				variant: 'jawg-streets',
 				// Get your own Jawg access token here : https://www.jawg.io/lab/
 				// NB : this is a demonstration key that comes with no guarantee
 				accessToken: '<insert your access token here>',
@@ -271,6 +409,7 @@
 			variants: {
 				Streets: 'jawg-streets',
 				Terrain: 'jawg-terrain',
+				Lagoon: 'jawg-lagoon',
 				Sunny: 'jawg-sunny',
 				Dark: 'jawg-dark',
 				Light: 'jawg-light',
@@ -305,9 +444,9 @@
 				maxZoom: 21
 			},
 			variants: {
-				Streets: 'streets',
-				Basic: 'basic',
-				Bright: 'bright',
+				Streets: 'streets-v2',
+				Basic: 'basic-v2',
+				Bright: 'bright-v2',
 				Pastel: 'pastel',
 				Positron: 'positron',
 				Hybrid: {
@@ -316,76 +455,35 @@
 						ext: 'jpg'
 					}
 				},
-				Toner: 'toner',
-				Topo: 'topo',
-				Voyager: 'voyager'
-			}
-		},
-		Stamen: {
-			url: 'https://stamen-tiles-{s}.a.ssl.fastly.net/{variant}/{z}/{x}/{y}{r}.{ext}',
-			options: {
-				attribution:
-					'Map tiles by <a href="http://stamen.com">Stamen Design</a>, ' +
-					'<a href="http://creativecommons.org/licenses/by/3.0">CC BY 3.0</a> &mdash; ' +
-					'Map data {attribution.OpenStreetMap}',
-				subdomains: 'abcd',
-				minZoom: 0,
-				maxZoom: 20,
-				variant: 'toner',
-				ext: 'png'
-			},
-			variants: {
-				Toner: 'toner',
-				TonerBackground: 'toner-background',
-				TonerHybrid: 'toner-hybrid',
-				TonerLines: 'toner-lines',
-				TonerLabels: 'toner-labels',
-				TonerLite: 'toner-lite',
-				Watercolor: {
-					url: 'https://stamen-tiles-{s}.a.ssl.fastly.net/{variant}/{z}/{x}/{y}.{ext}',
+				Toner: 'toner-v2',
+				Topo: 'topo-v2',
+				Voyager: 'voyager-v2',
+				Ocean: 'ocean',
+				Backdrop: 'backdrop',
+				Dataviz: 'dataviz',
+				DatavizLight: 'dataviz-light',
+				DatavizDark: 'dataviz-dark',
+				Aquarelle: {
 					options: {
-						variant: 'watercolor',
-						ext: 'jpg',
-						minZoom: 1,
-						maxZoom: 16
+						variant: 'aquarelle',
+						ext: 'webp'
 					}
 				},
-				Terrain: {
+				Landscape: 'landscape',
+				Openstreetmap: {
 					options: {
-						variant: 'terrain',
-						minZoom: 0,
-						maxZoom: 18
+						variant: 'openstreetmap',
+						ext: 'jpg'
 					}
 				},
-				TerrainBackground: {
+				Outdoor: 'outdoor-v2',
+				Satellite: {
 					options: {
-						variant: 'terrain-background',
-						minZoom: 0,
-						maxZoom: 18
+						variant: 'satellite',
+						ext: 'jpg'
 					}
 				},
-				TerrainLabels: {
-					options: {
-						variant: 'terrain-labels',
-						minZoom: 0,
-						maxZoom: 18
-					}
-				},
-				TopOSMRelief: {
-					url: 'https://stamen-tiles-{s}.a.ssl.fastly.net/{variant}/{z}/{x}/{y}.{ext}',
-					options: {
-						variant: 'toposm-color-relief',
-						ext: 'jpg',
-						bounds: [[22, -132], [51, -56]]
-					}
-				},
-				TopOSMFeatures: {
-					options: {
-						variant: 'toposm-features',
-						bounds: [[22, -132], [51, -56]],
-						opacity: 0.9
-					}
-				}
+				Winter: 'winter-v2',
 			}
 		},
 		TomTom: {
@@ -418,14 +516,6 @@
 						attribution:
 							'{attribution.Esri} &mdash; ' +
 							'Source: Esri, DeLorme, NAVTEQ, USGS, Intermap, iPC, NRCAN, Esri Japan, METI, Esri China (Hong Kong), Esri (Thailand), TomTom, 2012'
-					}
-				},
-				DeLorme: {
-					options: {
-						variant: 'Specialty/DeLorme_World_Base_Map',
-						minZoom: 1,
-						maxZoom: 11,
-						attribution: '{attribution.Esri} &mdash; Copyright: &copy;2012 DeLorme'
 					}
 				},
 				WorldTopoMap: {
@@ -469,7 +559,7 @@
 				},
 				OceanBasemap: {
 					options: {
-						variant: 'Ocean_Basemap',
+						variant: 'Ocean/World_Ocean_Base',
 						maxZoom: 13,
 						attribution: '{attribution.Esri} &mdash; Sources: GEBCO, NOAA, CHS, OSU, UNH, CSUMB, National Geographic, DeLorme, NAVTEQ, and Esri'
 					}
@@ -513,6 +603,7 @@
 			}
 		},
 		HERE: {
+
 			/*
 			 * HERE maps, formerly Nokia maps.
 			 * These basemaps are free, but you need an api id and app key. Please sign up at
@@ -527,8 +618,8 @@
 					'Map &copy; 1987-' + new Date().getFullYear() + ' <a href="http://developer.here.com">HERE</a>',
 				subdomains: '1234',
 				mapID: 'newest',
-				'app_id': '<insert your app_id here>',
-				'app_code': '<insert your app_code here>',
+				app_id: '<insert your app_id here>',
+				app_code: '<insert your app_code here>',
 				base: 'base',
 				variant: 'normal.day',
 				maxZoom: 20,
@@ -632,6 +723,7 @@
 			}
 		},
 		HEREv3: {
+
 			/*
 			 * HERE maps API Version 3.
 			 * These basemaps are free, but you need an API key. Please sign up at
@@ -796,11 +888,10 @@
 			}
 		},
 		BasemapAT: {
-			url: 'https://maps{s}.wien.gv.at/basemap/{variant}/{type}/google3857/{z}/{y}/{x}.{format}',
+			url: 'https://mapsneu.wien.gv.at/basemap/{variant}/{type}/google3857/{z}/{y}/{x}.{format}',
 			options: {
 				maxZoom: 19,
 				attribution: 'Datenquelle: <a href="https://www.basemap.at">basemap.at</a>',
-				subdomains: ['', '1', '2', '3', '4'],
 				type: 'normal',
 				format: 'png',
 				bounds: [[46.358770, 8.782379], [49.037872, 17.189532]],
@@ -853,12 +944,12 @@
 				attribution: 'Kaartgegevens &copy; <a href="https://www.kadaster.nl">Kadaster</a>'
 			},
 			variants: {
-				'standaard': 'standaard',
-				'pastel': 'pastel',
-				'grijs': 'grijs',
-				'water': 'water',
-				'luchtfoto': {
-					'url': 'https://service.pdok.nl/hwh/luchtfotorgb/wmts/v1_0/Actueel_ortho25/EPSG:3857/{z}/{x}/{y}.jpeg',
+				standaard: 'standaard',
+				pastel: 'pastel',
+				grijs: 'grijs',
+				water: 'water',
+				luchtfoto: {
+					url: 'https://service.pdok.nl/hwh/luchtfotorgb/wmts/v1_0/Actueel_ortho25/EPSG:3857/{z}/{x}/{y}.jpeg',
 				}
 			}
 		},
@@ -910,7 +1001,7 @@
 				},
 				ModisTerraChlorophyll: {
 					options: {
-						variant: 'MODIS_Terra_Chlorophyll_A',
+						variant: 'MODIS_Terra_L2_Chlorophyll_A',
 						format: 'png',
 						maxZoom: 7,
 						opacity: 0.75
@@ -920,20 +1011,29 @@
 		},
 		NLS: {
 			// NLS maps are copyright National library of Scotland.
-			// http://maps.nls.uk/projects/api/index.html
+			// http://maps.nls.uk/projects/subscription-api
 			// Please contact NLS for anything other than non-commercial low volume usage
 			//
-			// Map sources: Ordnance Survey 1:1m to 1:63K, 1920s-1940s
+			// Map sources: Ordnance Survey 1:1m to 1:63K, 1880s-1961
 			//   z0-9  - 1:1m
 			//  z10-11 - quarter inch (1:253440)
 			//  z12-18 - one inch (1:63360)
-			url: 'https://nls-{s}.tileserver.com/nls/{z}/{x}/{y}.jpg',
+			url: 'https://api.maptiler.com/tiles/{variant}/{z}/{x}/{y}.jpg?key={apikey}',
 			options: {
-				attribution: '<a href="http://geo.nls.uk/maps/">National Library of Scotland Historic Maps</a>',
+				attribution: '<a href="http://maps.nls.uk/projects/subscription-api">National Library of Scotland Historic Maps</a>',
 				bounds: [[49.6, -12], [61.7, 3]],
 				minZoom: 1,
 				maxZoom: 18,
-				subdomains: '0123',
+				apikey: '<insert your api key here>'
+			},
+			variants: {
+				osgb63k1885: 'uk-osgb63k1885',
+				osgb1888: 'uk-osgb1888',
+				osgb10k1888: 'uk-osgb10k1888',
+				osgb1919: 'uk-osgb1919',
+				osgb25k1937: 'uk-osgb25k1937',
+				osgb63k1955: 'uk-osgb63k1955',
+				oslondon1k1893: 'uk-oslondon1k1893'
 			}
 		},
 		JusticeMap: {
@@ -961,15 +1061,12 @@
 			}
 		},
 		GeoportailFrance: {
-			url: 'https://wxs.ign.fr/{apikey}/geoportail/wmts?REQUEST=GetTile&SERVICE=WMTS&VERSION=1.0.0&STYLE={style}&TILEMATRIXSET=PM&FORMAT={format}&LAYER={variant}&TILEMATRIX={z}&TILEROW={y}&TILECOL={x}',
+			url: 'https://data.geopf.fr/wmts?REQUEST=GetTile&SERVICE=WMTS&VERSION=1.0.0&STYLE={style}&TILEMATRIXSET=PM&FORMAT={format}&LAYER={variant}&TILEMATRIX={z}&TILEROW={y}&TILECOL={x}',
 			options: {
 				attribution: '<a target="_blank" href="https://www.geoportail.gouv.fr/">Geoportail France</a>',
 				bounds: [[-75, -180], [81, 180]],
 				minZoom: 2,
 				maxZoom: 18,
-				// Get your own geoportail apikey here : http://professionnels.ign.fr/ign/contrats/
-				// NB : 'choisirgeoportail' is a demonstration key that comes with no guarantee
-				apikey: 'choisirgeoportail',
 				format: 'image/png',
 				style: 'normal',
 				variant: 'GEOGRAPHICALGRIDSYSTEMS.PLANIGNV2'
@@ -1064,9 +1161,9 @@
 			}
 		},
 		AzureMaps: {
-			url: 
-				'https://atlas.microsoft.com/map/tile?api-version={apiVersion}'+
-				'&tilesetId={variant}&x={x}&y={y}&zoom={z}&language={language}'+
+			url:
+				'https://atlas.microsoft.com/map/tile?api-version={apiVersion}' +
+				'&tilesetId={variant}&x={x}&y={y}&zoom={z}&language={language}' +
 				'&subscription-key={subscriptionKey}',
 			options: {
 				attribution: 'See https://docs.microsoft.com/en-us/rest/api/maps/render-v2/get-map-tile for details.',
@@ -1082,9 +1179,9 @@
 				MicrosoftBaseHybridRoad: 'microsoft.base.hybrid.road',
 				MicrosoftTerraMain: 'microsoft.terra.main',
 				MicrosoftWeatherInfraredMain: {
-					url: 
-					'https://atlas.microsoft.com/map/tile?api-version={apiVersion}'+
-					'&tilesetId={variant}&x={x}&y={y}&zoom={z}'+
+					url:
+					'https://atlas.microsoft.com/map/tile?api-version={apiVersion}' +
+					'&tilesetId={variant}&x={x}&y={y}&zoom={z}' +
 					'&timeStamp={timeStamp}&language={language}' +
 					'&subscription-key={subscriptionKey}',
 					options: {
@@ -1094,9 +1191,9 @@
 					},
 				},
 				MicrosoftWeatherRadarMain: {
-					url: 
-					'https://atlas.microsoft.com/map/tile?api-version={apiVersion}'+
-					'&tilesetId={variant}&x={x}&y={y}&zoom={z}'+
+					url:
+					'https://atlas.microsoft.com/map/tile?api-version={apiVersion}' +
+					'&tilesetId={variant}&x={x}&y={y}&zoom={z}' +
 					'&timeStamp={timeStamp}&language={language}' +
 					'&subscription-key={subscriptionKey}',
 					options: {
@@ -1125,10 +1222,22 @@
 					}
 				}
 			}
+		},
+		TopPlusOpen: {
+			url: 'http://sgx.geodatenzentrum.de/wmts_topplus_open/tile/1.0.0/{variant}/default/WEBMERCATOR/{z}/{y}/{x}.png',
+			options: {
+				maxZoom: 18,
+				attribution: 'Map data: &copy; <a href="http://www.govdata.de/dl-de/by-2-0">dl-de/by-2-0</a>',
+				variant: 'web',
+			},
+			variants: {
+				Color: 'web',
+				Grey: 'web_grau'
+			}
 		}
 	};
 
-	L.tileLayer.provider = function (provider, options) {
+	L.tileLayer.provider = function(provider, options) {
 		return new L.TileLayer.Provider(provider, options);
 	};
 
