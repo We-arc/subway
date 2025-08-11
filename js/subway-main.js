@@ -207,7 +207,7 @@ var map = L.map('map', {
 }).setView([40.713, -74.006], 13);
 
 
-L.tileLayer.provider('CartoDB.Positron').addTo(map);
+L.tileLayer.provider('Stadia.AlidadeSmooth').addTo(map);
 /*
 L.tileLayer('http://server.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Light_Gray_Base/MapServer/tile/{z}/{y}/{x}', {
         attribution: '',
