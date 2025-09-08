@@ -158,6 +158,10 @@ function initialize_game_state() {
     N_lines.push(new Line('AirTrain JFK-Archer', '&#9992;', 'subway-line', '#FFF200', '#000000'));
     N_lines.push(new Line('AirTrain JFK-Connectors', '&#9992;', 'subway-line', '#FFF200', '#000000'));
     N_lines.push(new Line('TriboroRX', 'TriboroRX', 'subway-line-long', '#FCCC0A', '#000000'));
+    N_lines.push(new Line('M-Nassau', 'M', 'subway-line', '#996633', '#FFFFFF'));
+    N_lines.push(new Line('Q-Orange', 'Q', 'subway-line', '#FF6319', '#FFFFFF'));
+    N_lines.push(new Line('B-Broadway', 'B', 'subway-line', '#FCCC0A', '#000000'));
+    N_lines.push(new Line('D-Broadway', 'D', 'subway-line', '#FCCC0A', '#000000'));
 
     //Saving space here in case we want to add more defaults later
     for(var i = 0; i < 50; i++) {
