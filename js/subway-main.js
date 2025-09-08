@@ -179,11 +179,11 @@ function initialize_game_state() {
 
     N_line_groups = [];
     N_line_groups.push(new LineGroup('#0039A6', [find_line_by_name('A').id, find_line_by_name('A-Euclid').id, find_line_by_name('C').id, find_line_by_name('E').id, find_line_by_name('H').id, find_line_by_name('K').id, find_line_by_name('SIRR').id]));
-    N_line_groups.push(new LineGroup('#FF6319', [find_line_by_name('B').id, find_line_by_name('D').id, find_line_by_name('F').id, find_line_by_name('M').id, find_line_by_name('V').id]))
+    N_line_groups.push(new LineGroup('#FF6319', [find_line_by_name('B').id, find_line_by_name('D').id, find_line_by_name('F').id, find_line_by_name('M').id, find_line_by_name('V').id, find_line_by_name('Q-Orange').id]))
     N_line_groups.push(new LineGroup('#6CBE45', [find_line_by_name('G').id]));
-    N_line_groups.push(new LineGroup('#996633', [find_line_by_name('J').id, find_line_by_name('Z').id]));
+    N_line_groups.push(new LineGroup('#996633', [find_line_by_name('J').id, find_line_by_name('Z').id, find_line_by_name('M-Nassau').id]));
     N_line_groups.push(new LineGroup('#A7A9AC', [find_line_by_name('L').id]));
-    N_line_groups.push(new LineGroup('#FCCC0A', [find_line_by_name('N').id, find_line_by_name('Q').id, find_line_by_name('R').id, find_line_by_name('W').id, find_line_by_name('TriboroRX').id]));
+    N_line_groups.push(new LineGroup('#FCCC0A', [find_line_by_name('N').id, find_line_by_name('Q').id, find_line_by_name('R').id, find_line_by_name('W').id, find_line_by_name('TriboroRX').id, find_line_by_name('B-Broadway').id, find_line_by_name('D-Broadway').id]));
     N_line_groups.push(new LineGroup('#808183', [find_line_by_name('S-1').id, find_line_by_name('S-2').id, find_line_by_name('S-3').id, find_line_by_name('S-4').id]));
     N_line_groups.push(new LineGroup('#EE352E', [find_line_by_name('1').id, find_line_by_name('2').id, find_line_by_name('3').id, find_line_by_name('9').id, find_line_by_name('13').id]));
     N_line_groups.push(new LineGroup('#00933C', [find_line_by_name('4').id, find_line_by_name('5').id, find_line_by_name('6').id, find_line_by_name('8').id, find_line_by_name('10').id, find_line_by_name('12').id]));
